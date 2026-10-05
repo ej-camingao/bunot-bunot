@@ -317,11 +317,24 @@
 
 	.front {
 		position: relative;
+		z-index: 1;
+		pointer-events: auto;
 	}
 
 	.back {
 		position: absolute;
 		inset: 0;
+		z-index: 0;
+		/* Mobile Safari still hit-tests backface-hidden faces; disable until flipped. */
+		pointer-events: none;
+	}
+
+	.tag.flipped .front {
+		pointer-events: none;
+	}
+
+	.tag.flipped .back {
+		pointer-events: auto;
 	}
 
 	.face::before {
@@ -415,10 +428,16 @@
 
 	.pill input {
 		position: absolute;
-		opacity: 0;
 		inset: 0;
+		width: 100%;
+		height: 100%;
 		margin: 0;
+		opacity: 0.001;
 		cursor: pointer;
+		appearance: none;
+		-webkit-appearance: none;
+		border: 0;
+		background: transparent;
 	}
 
 	.field {
@@ -541,6 +560,7 @@
 
 		.tag .front {
 			opacity: 1;
+			pointer-events: auto;
 		}
 
 		.tag.flipped .front {
@@ -551,10 +571,12 @@
 		.tag .back {
 			opacity: 0;
 			transform: none;
+			pointer-events: none;
 		}
 
 		.tag.flipped .back {
 			opacity: 1;
+			pointer-events: auto;
 		}
 	}
 </style>
